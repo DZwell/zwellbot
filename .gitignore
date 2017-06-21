@@ -1,7 +1,7 @@
 node_modules
 .DS_Store*
 .hubot_history
-/bin
-/include
-/lib
+bin/
+include/
+lib/
 pip-selfcheck.json
