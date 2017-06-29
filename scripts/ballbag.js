@@ -1,21 +1,30 @@
 const PythonShell = require('python-shell');
-// const pyShell = new PythonShell('test.py');
-// const python = require('child_process');
+const pyShell = new PythonShell('spreadsheet.py', { 
+    scriptPath: '/Users/ZweliD/Documents/zwellbot/pysheets/',
+    mode: 'text',
+});
 
 module.exports = (robot) => {
-    robot.hear(/hey/, (res) => {
+    robot.hear(/.*/, (res) => {
         const channel = res.envelope.room;
-        const options = {
-            scriptPath: `/danielzwelling/Documents/coding_stuff/hubot/pysheets`,
-        }
+        const slackMessage = res.message.text;
         if (channel === 'C5C68HRC6') {
-            PythonShell.run('test.py', (error, results) => {
-                if (error) {
-                    throw error;
+            pyShell.send(slackMessage);
+            pyShell.on('message', (message, err) => {
+                if (err) {
+                    throw err;
                 }
-                console.log(results);
-                console.log('done');
+                console.log(slackMessage)
+                console.log(message);
             });
+
+            // pyShell.end((err) => {
+            //     if (err) {
+            //         throw err;
+            //     } else {
+            //         console.log('done');
+            //     }
+            // });
         }
     });
 };

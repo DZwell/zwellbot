@@ -1,16 +1,26 @@
 import gspread
+import sys
 from oauth2client.service_account import ServiceAccountCredentials
 
+# message = sys.stdin.readlines()
+print('we made it to script, maybe inserted, not sure')
 
-# use creds to create a client to interact with the Google Drive API
-scope = ['https://spreadsheets.google.com/feeds']
-creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-client = gspread.authorize(creds)
+try:
+    # use creds to create a client to interact with the Google Drive API
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+    client = gspread.authorize(creds)
 
-# Find a workbook by name and open the first sheet
-# Make sure you use the right name here.
-sheet = client.open("Slack Messages").sheet1
+    # Find a workbook by name and open the first sheet
+    # Make sure you use the right name here.
+    sheet = client.open("Zwellbot").sheet1
 
-# Extract and print all of the values
-list_of_hashes = sheet.get_all_records()
-print(list_of_hashes)
+    # Extract and print all of the values
+    # list_of_hashes = sheet.get_all_records()
+    # print(list_of_hashes)
+
+    message = sys.stdin.readlines()
+    print(message)
+    sheet.insert_row(message, 1)
+except Exception as e:
+    print(e)
